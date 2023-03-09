@@ -18,9 +18,9 @@ def predict():
     print(final_input)
     output=rf_model.predict(final_input)[0]
     if output == 1:
-        return render_template("index.html", prediction_text="The Loan status is YES ")
+        return render_template("index.html", prediction_text="The Loan status is yes ")
     else:
-        return render_template("index.html", prediction_text="The Loan status is NO ")
+        return render_template("index.html", prediction_text="The Loan status is no ")
 
 
 if __name__=="__main__":   # To start the app
