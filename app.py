@@ -10,8 +10,22 @@ rf_model= joblib.load(open('rfmodel.h5', 'rb'))
 def home():
     return render_template('index.html')
 
-
 @app.route('/predict', methods=['POST'])
+def predict():
+    try:
+        data=[float(x) for x in request.json.values()]
+        final_input=np.array(data).reshape(1,-1)  
+        output=rf_model.predict(final_input)[0]
+        if output == 1:
+            return {"prediction": "yes"}
+        else:
+            return {"prediction": "no"}
+    except:
+        return {"error": "invalid input"}
+
+
+
+'''@app.route('/predict', methods=['POST'])
 def predict():
     data=[float(x) for x in request.form.values()]
     final_input=np.array(data).reshape(1,-1)  
@@ -20,7 +34,7 @@ def predict():
     if output == 1:
         return render_template("index.html", prediction_text="The Loan status is yes ")
     else:
-        return render_template("index.html", prediction_text="The Loan status is no ")
+        return render_template("index.html", prediction_text="The Loan status is no ")'''
 
 
 if __name__=="__main__":   # To start the app
